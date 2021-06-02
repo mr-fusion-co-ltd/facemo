@@ -1,0 +1,13 @@
+let faceDetector = new FaceDetector({fastMode: true, maxDetectedFaces: 1});
+// Assuming |theImage| is e.g. a &lt;img> content, or a Blob.
+
+faceDetector.detect(theImage)
+.then(detectedFaces => {
+  for (const face of detectedFaces) {
+    console.log(
+        ' Face @ (${face.boundingBox.x}, ${face.boundingBox.y}),' +
+        ' size ${face.boundingBox.width}x${face.boundingBox.height}');
+  }
+}).catch(() => {
+  console.error("Face Detection failed, boo.");
+})
