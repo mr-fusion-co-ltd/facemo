@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    <img src="***顔写真のある画像を指定***" id="image">
+    <img src="/1.jpg" id="image">
     <canvas id="canvas"></canvas>
 
     <script>
@@ -16,8 +16,8 @@
         let scale = 1;
 
         image.onload = function() {
-            canvas.width = image.width;   //Canvasを画像と同じ大きさにする
-            canvas.height = image.height; //Canvasを画像と同じ大きさにする
+            canvas.width = image.width;32
+            canvas.height = image.height;32
             ctx.drawImage(image,
                 0, 0, image.width, image.height,
                 0, 0, canvas.width, canvas.height);
