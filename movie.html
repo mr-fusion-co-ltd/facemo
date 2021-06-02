@@ -5,9 +5,9 @@
     <title>Face Detection API sample</title>
 </head>
 <body>
+
+    <img src="https://drive.google.com/file/d/1aHbiT7iDdQ7LdDzKadRi5-CRTqYgvPvG/view" id="image">
     <canvas id="canvas"></canvas>
-    <source src="https://drive.google.com/file/d/1aHbiT7iDdQ7LdDzKadRi5-CRTqYgvPvG/view?usp=sharing" width="480px" height="270px">
-     <canvas id="canvas"></canvas>
 
     <script>
         const image = document.getElementById('image');
@@ -16,8 +16,8 @@
         let scale = 1;
 
         image.onload = function() {
-            canvas.width = image.width;640
-            canvas.height = image.height;640
+            canvas.width = image.width;32
+            canvas.height = image.height;32
             ctx.drawImage(image,
                 0, 0, image.width, image.height,
                 0, 0, canvas.width, canvas.height);
@@ -25,15 +25,31 @@
             detect(); //追加：読み込み完了後に写真に四角い線を描画する
         };
 
-                
-        
         function detect() {
             if (window.FaceDetector == undefined) {
                 console.error('Face Detection not supported');
                 return;
             }
-
-           let faceDetector = new FaceDetector({fastMode: true, maxDetectedFaces: 1});
+            const faceDetector = new FaceDetector();
+            faceDetector.detect(image)
+                .then(faces => {
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = 'red';
+                    for (let face of faces) {
+                        ctx.rect(Math.floor(face.boundingBox.x * scale),
+                            Math.floor(face.boundingBox.y * scale),
+                            Math.floor(face.boundingBox.width * scale),
+                            Math.floor(face.boundingBox.height * scale));
+                        ctx.stroke();
+                        console.log(face);
+                    }
+                })
+                .catch((e) => {
+                    console.error("Boo, Face Detection failed: " + e);
+                });
+        }
+        
+        let faceDetector = new FaceDetector({fastMode: true, maxDetectedFaces: 1});
 // Assuming |theImage| is e.g. a &lt;img> content, or a Blob.
 
 faceDetector.detect(theImage)
@@ -46,8 +62,6 @@ faceDetector.detect(theImage)
 }).catch(() => {
   console.error("Face Detection failed, boo.");
 })
-        
-        
 
 
     </script>
