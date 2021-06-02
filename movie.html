@@ -6,7 +6,7 @@
 </head>
 <body>
 
-    <img src="/1.mp4" id="movie">
+    <img src="/1.mp4" id="image">
     <canvas id="canvas"></canvas>
 
     <script>
@@ -16,8 +16,8 @@
         let scale = 1;
 
         image.onload = function() {
-            canvas.width = image.width;32
-            canvas.height = image.height;32
+            canvas.width = image.width;640
+            canvas.height = image.height;640
             ctx.drawImage(image,
                 0, 0, image.width, image.height,
                 0, 0, canvas.width, canvas.height);
